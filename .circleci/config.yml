@@ -96,6 +96,20 @@ jobs:
       - image: cimg/node:lts
     steps:
       - run:
+          name: Redeploy Railway service
+          command: |
+            : "${RAILWAY_TOKEN:?Set RAILWAY_TOKEN in CircleCI}"
+            : "${RAILWAY_SERVICE_ID:?Set RAILWAY_SERVICE_ID in CircleCI}"
+
+            echo "Checking Railway project and environment..."
+            npx --yes @railway/cli status
+
+            echo "Asking Railway to redeploy..."
+            npx --yes @railway/cli redeploy \
+              --service "$RAILWAY_SERVICE_ID" \
+              --yes
+
+      - run:
           name: Redeploy latest image on Railway
           command: |
             echo "Asking Railway to redeploy the latest image..."
