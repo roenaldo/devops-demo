@@ -113,7 +113,9 @@ workflows:
   build_test_scan_publish_deploy:
     jobs:
       - build
-      - snyk_scan
+      - snyk_scan:
+          requires:
+            - build
       - snyk_code
       - test:
           requires:
