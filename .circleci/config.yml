@@ -62,11 +62,10 @@ jobs:
           name: Verify Maven dependency resolution for Snyk
           command: |
             java -version
-            mvn -version
-            mvn -B -ntp dependency:tree -DoutputType=dot
+            ./mvnw -version
+            ./mvnw -B -ntp dependency:tree -DoutputType=dot
       - snyk/scan:
           target-file: pom.xml
-          additional-test-arguments: "-d"
           severity-threshold: high
           cli-version: 1.1308.1
           monitor-on-build: false
